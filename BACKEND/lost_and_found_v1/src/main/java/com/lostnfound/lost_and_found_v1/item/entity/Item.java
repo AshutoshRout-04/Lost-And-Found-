@@ -30,7 +30,6 @@ public class Item {
     private String description;
     private String location;
     private LocalDate date;
-    //gccuehcue
     @Enumerated(EnumType.STRING)
     private ItemType itemType;
 
