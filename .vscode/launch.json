@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LostAndFoundV1Application<lost_and_found_v1>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.lostnfound.lost_and_found_v1.LostAndFoundV1Application",
+            "projectName": "lost_and_found_v1",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
