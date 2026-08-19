@@ -3,7 +3,7 @@ package com.lostnfound.lost_and_found_v1.claim.entity;
 import java.time.LocalDateTime;
 
 import com.lostnfound.lost_and_found_v1.common.enums.ClaimStatus;
-import com.lostnfound.lost_and_found_v1.item.entity.Item;
+import com.lostnfound.lost_and_found_v1.item.entity.ItemPost;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,7 +30,7 @@ public class Claim {
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    private Item item;
+    private ItemPost item;
     private String claimedBy;
     @Enumerated(EnumType.STRING)
     private ClaimStatus claimStatus;
