@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.lostnfound.lost_and_found_v1.common.enums.ClaimStatus;
 import com.lostnfound.lost_and_found_v1.item.entity.ItemPost;
+import com.lostnfound.lost_and_found_v1.user.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,18 +24,24 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Claim {
+public class ClaimRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
-    private ItemPost item;
-    private String claimedBy;
-    @Enumerated(EnumType.STRING)
-    private ClaimStatus claimStatus;
+    @JoinColumn(name="item_post_id")
+    private ItemPost itemPost;
 
-    private String proofOfOwnership;
+    @ManyToOne
+    @JoinColumn(name = "claimant_user_id")
+    private User claimant;
+
+
+    private String verificationAnswer;
+
+    @Enumerated(EnumType.STRING)
+    private ClaimStatus status=ClaimStatus.PENDING;
+    private LocalDateTime decidedAt;
     private LocalDateTime createdAt;
 }
