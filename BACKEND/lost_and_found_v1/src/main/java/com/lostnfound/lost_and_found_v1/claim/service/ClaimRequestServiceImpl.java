@@ -32,30 +32,36 @@ public class ClaimRequestServiceImpl implements ClaimRequestService {
     }
 
     @Override
-    public ClaimRequest approveClaim(Long claimId) {
-        ClaimRequest claim = claimRequestRepository.findById(claimId)
-                .orElseThrow(() -> new RuntimeException("Claim not found"));
+    public ClaimRequest approveClaim(Long itemPostId ,Long claimId) {
 
-        List<ClaimRequest> pendingClaims = claimRequestRepository.findAllByItemPostIdAndStatus(
-                claim.getItemPost().getId(),
-                ClaimStatus.PENDING);
+        //Find the whether the claim id and itempost id combination exist or not 
+        ClaimRequest claim=claimRequestRepository.findByIdAndItemPostId(claimId,itemPostId)
+        .orElseThrow(() -> new RuntimeException("Claim not found for this item"));
 
-        for (ClaimRequest pendingClaim : pendingClaims) {
-            if (!pendingClaim.getId().equals(claimId)) {
+        //Find all the pending claim requests for that item
+        List<ClaimRequest> pendingClaims =claimRequestRepository.findAllByItemPostIdAndStatus(itemPostId,ClaimStatus.PENDING);
+
+
+        for(ClaimRequest pendingClaim : pendingClaims){
+            if(!pendingClaim.getId().equals(claimId)){
                 pendingClaim.setStatus(ClaimStatus.REJECTED);
                 claimRequestRepository.save(pendingClaim);
             }
         }
 
         claim.setStatus(ClaimStatus.APPROVED);
-
         return claimRequestRepository.save(claim);
 
     }
 
     @Override
-    public ClaimRequest rejectClaim(Long claimId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rejectClaim'");
+    public ClaimRequest rejectClaim(Long itemPostId, Long claimId) {
+        ClaimRequest claim =claimRequestRepository
+        .findByIdAndItemPostId(claimId,itemPostId)
+        .orElseThrow(() -> new RuntimeException("Claim not found for this item"));
+
+        claim.setStatus(ClaimStatus.REJECTED);
+
+        return claimRequestRepository.save(claim);
     }
 }

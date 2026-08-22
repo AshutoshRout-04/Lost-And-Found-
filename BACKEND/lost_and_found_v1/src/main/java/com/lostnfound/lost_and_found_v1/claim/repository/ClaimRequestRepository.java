@@ -1,6 +1,7 @@
 package com.lostnfound.lost_and_found_v1.claim.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,4 +15,10 @@ public interface ClaimRequestRepository extends JpaRepository<ClaimRequest,Long>
     List<ClaimRequest> findAllByClaimantId(Long claimantId);
     
     List<ClaimRequest> findAllByItemPostIdAndStatus(Long itemPostId , ClaimStatus status);
+
+    Optional<ClaimRequest> findByIdAndItemPostId(
+        Long claimId,
+        Long itemPostId
+    );
+
 }
